@@ -151,7 +151,6 @@ export class BoilerplateCard extends LitElement {
 
     return html`
       <ha-card
-        .header=${this.config.name}
         @action=${this._handleAction}
         .actionHandler=${actionHandler({
           hasHold: hasAction(this.config.hold_action),
