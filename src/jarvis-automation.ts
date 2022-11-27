@@ -25,23 +25,23 @@ import { actionHandler } from './action-handler-directive';
 
 /* eslint no-console: 0 */
 console.info(
-  `%c  JARVIS-WIDGET-TEMPLATE \n%c  version: ${CARD_VERSION}  `,
+  `%c  jarvis-automation \n%c  version: ${CARD_VERSION}  `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
 
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
-  type: 'jarvis-widget-template',
+  type: 'jarvis-automation',
   name: 'Boilerplate Card',
   description: 'A template custom card for you to create something awesome',
 });
 
 export class BoilerplateCard extends LitElement {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    // REPLACE "jarvis-widget-template" with widget name, everywhere in the project
+    // REPLACE "jarvis-automation" with widget name, everywhere in the project
     // REPLACE the file name with the actual widget name
-    return document.createElement('jarvis-widget-template-editor');
+    return document.createElement('jarvis-automation-editor');
   }
 
   public static getStubConfig(): Record<string, unknown> {
@@ -102,20 +102,30 @@ export class BoilerplateCard extends LitElement {
 
   static get styles(): CSSResultGroup {
     return css`
-      /* REPLACE "jarvis-widget-template" with actual widget name */
-      .type-custom-jarvis-widget-template {
+      /* REPLACE "jarvis-automation" with actual widget name */
+      .type-custom-jarvis-automation {
         height: 100%;
         width: 100%;
       }
       .jarvis-widget {
+        font-weight: 200;
         height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 20px;
-        box-sizing: border-box;
-        border: 1px solid #fff;
+        line-height: 2em;
+        display: flex;
+        margin-right: 7px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        background: url('/local/jarvis/assets/cctv_frame_fat.svg');
+      }
+      .automation-icon{
+        max-height: 30px;
+      }
+      .automation-name{
+        font-size: 0.8em;
+        width: 30px;
+        text-align: center;
       }
     `;
   }
@@ -150,10 +160,18 @@ export class BoilerplateCard extends LitElement {
         tabindex="0"
         .label=${`Boilerplate: ${this.config || 'No Entity Defined'}`}
       >
-        <div class='jarvis-widget'>It's the template!</div>
+        <div class='jarvis-widget'>
+        <div class='automation-icon'>
+            ${console.log(this.config.name)}
+            <svg-item state=${this.config.icon}></svg-item>
+          </div>
+          <div class='automation-name'>
+            ${this.config.name}
+          </div>
+        </div>
       </ha-card>
     `;
   }
 }
 
-customElements.define("jarvis-widget-template", BoilerplateCard);
+customElements.define("jarvis-automation", BoilerplateCard);
