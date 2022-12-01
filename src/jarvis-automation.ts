@@ -111,21 +111,18 @@ export class BoilerplateCard extends LitElement {
         font-weight: 200;
         height: 100%;
         line-height: 2em;
-        display: flex;
-        margin-right: 7px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+        margin-right: 17px;
         color: #fff;
         background: url('/local/jarvis/assets/cctv_frame_fat.svg');
+        height: 70px;
+        width: 70px;
+        padding: 15px 22px 22px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 0.8em;
       }
       .automation-icon{
-        max-height: 30px;
-      }
-      .automation-name{
-        font-size: 0.8em;
-        width: 30px;
-        text-align: center;
+        max-height: 27px;
       }
     `;
   }
@@ -164,9 +161,7 @@ export class BoilerplateCard extends LitElement {
             ${console.log(this.config.name)}
             <svg-item state=${this.config.icon}></svg-item>
           </div>
-          <div class='automation-name'>
-            ${this.config.name}
-          </div>
+          ${this.config.name}
         </div>
       </ha-card>
     `;
