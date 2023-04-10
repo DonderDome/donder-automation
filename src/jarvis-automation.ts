@@ -107,22 +107,34 @@ export class BoilerplateCard extends LitElement {
         height: 100%;
         width: 100%;
       }
+      .jarvis-sizer {
+        max-width: 100%;
+        opacity: 0;
+      }
       .jarvis-widget {
-        font-weight: 200;
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100%;
+        width: 100%;
+        font-weight: 200;
         line-height: 2em;
         margin-right: 17px;
         color: #fff;
         background: url('/local/jarvis/assets/cctv_frame_fat.svg');
-        height: 70px;
-        width: 70px;
+        background-repeat: no-repeat;
         padding: 15px 22px 22px;
         box-sizing: border-box;
         text-align: center;
         font-size: 0.8em;
       }
       .automation-icon{
-        max-height: 27px;
+        max-height: 80%;
+      }
+      @media (max-width: 600px) {
+        .jarvis-widget {
+          margin-right: 0;
+        }
       }
     `;
   }
