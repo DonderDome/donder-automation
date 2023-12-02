@@ -25,23 +25,23 @@ import { actionHandler } from './action-handler-directive';
 
 /* eslint no-console: 0 */
 console.info(
-  `%c  jarvis-automation \n%c  version: ${CARD_VERSION}  `,
+  `%c  donder-automation \n%c  version: ${CARD_VERSION}  `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
 
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
-  type: 'jarvis-automation',
+  type: 'donder-automation',
   name: 'Boilerplate Card',
   description: 'A template custom card for you to create something awesome',
 });
 
 export class BoilerplateCard extends LitElement {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    // REPLACE "jarvis-automation" with widget name, everywhere in the project
+    // REPLACE "donder-automation" with widget name, everywhere in the project
     // REPLACE the file name with the actual widget name
-    return document.createElement('jarvis-automation-editor');
+    return document.createElement('donder-automation-editor');
   }
 
   public static getStubConfig(): Record<string, unknown> {
@@ -102,16 +102,16 @@ export class BoilerplateCard extends LitElement {
 
   static get styles(): CSSResultGroup {
     return css`
-      /* REPLACE "jarvis-automation" with actual widget name */
-      .type-custom-jarvis-automation {
+      /* REPLACE "donder-automation" with actual widget name */
+      .type-custom-donder-automation {
         height: 100%;
         width: 100%;
       }
-      .jarvis-sizer {
+      .donder-sizer {
         max-width: 100%;
         opacity: 0;
       }
-      .jarvis-widget {
+      .donder-widget {
         position: absolute;
         top: 0;
         left: 0;
@@ -121,18 +121,21 @@ export class BoilerplateCard extends LitElement {
         line-height: 2em;
         margin-right: 17px;
         color: #fff;
-        background: url('/local/jarvis/assets/cctv_frame_fat.svg');
+        background: url('/local/donder/assets/cctv_frame_fat.svg');
         background-repeat: no-repeat;
         padding: 15px 22px 22px;
         box-sizing: border-box;
         text-align: center;
         font-size: 0.8em;
       }
+      /* .donder-widget:active {
+        opacity: 0.4;
+      } */
       .automation-icon{
         max-height: 80%;
       }
       @media (max-width: 600px) {
-        .jarvis-widget {
+        .donder-widget {
           margin-right: 0;
         }
       }
@@ -168,9 +171,9 @@ export class BoilerplateCard extends LitElement {
         tabindex="0"
         .label=${`Boilerplate: ${this.config || 'No Entity Defined'}`}
       >
-        <div class='jarvis-widget'>
-        <div class='automation-icon'>
-            ${console.log(this.config.name)}
+        <img src='/local/donder/assets/sizer.jpg' class="donder-sizer"/>
+        <div class='donder-widget'>
+          <div class='automation-icon'>
             <svg-item state=${this.config.icon}></svg-item>
           </div>
           ${this.config.name}
@@ -180,4 +183,4 @@ export class BoilerplateCard extends LitElement {
   }
 }
 
-customElements.define("jarvis-automation", BoilerplateCard);
+customElements.define("donder-automation", BoilerplateCard);

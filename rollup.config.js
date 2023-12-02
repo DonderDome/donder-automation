@@ -32,7 +32,7 @@ const plugins = [
 
 export default [
   {
-    input: 'src/jarvis-automation.ts',
+    input: 'src/donder-automation.ts',
     output: {
       dir: 'dist',
       format: 'es',
