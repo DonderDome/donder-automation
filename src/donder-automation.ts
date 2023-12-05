@@ -75,10 +75,92 @@ export class BoilerplateCard extends LitElement {
     return hasConfigOrEntityChanged(this, changedProps, false);
   }
 
-  private _handleAction(ev: ActionHandlerEvent): void {
-    if (this.hass && this.config && ev.detail.action) {
-      handleAction(this, this.hass, this.config, ev.detail.action);
+  // private _handleAction(ev: ActionHandlerEvent): void {
+  //   if (this.hass && this.config && ev.detail.action) {
+  //     handleAction(this, this.hass, this.config, ev.detail.action);
+  //   }
+  // }
+
+  protected handleClick() {
+    const { settings, confirmation } = this.config
+    if (confirmation) {
+      this.hass.callService('browser_mod', 'popup', {
+        content: this.config.content || "Are you sure you want to perform this operation?",
+        right_button: this.config.confirm_text || "Confirm",
+        right_button_action: {
+          service: `${settings.domain}.${settings.service}`,
+          data: settings.service_data
+        },
+        left_button: "Close",
+        left_button_action: this.hass.callService('browser_mod', 'close_popup', {browser_id: localStorage.getItem('browser_mod-browser-id')}),
+        browser_id: localStorage.getItem('browser_mod-browser-id'),
+        card_mod: {
+          style:{
+            "ha-dialog$": `div.mdc-dialog div.mdc-dialog__scrim {
+              -webkit-backdrop-filter: blur(0.7em);
+              backdrop-filter: blur(0.7em);
+              transition: none !important;
+              background-color: rgba(0, 0, 0, 0.5) !important;
+            } div.mdc-dialog div.mdc-dialog__surface {
+              border-radius: 5px;
+              width: 900px;
+            } div.mdc-dialog div.mdc-dialog__container {
+              height: auto !important;
+            }
+            `,
+          }
+        }
+      })
+    } else {
+      this.hass.callService(settings.domain, settings.service, settings.service_data)
     }
+  }
+
+  protected _handleAction(ev: ActionHandlerEvent): void {
+    const { action } = ev?.detail
+
+    if (action === 'hold') {
+      this.handleHold()
+    }
+
+    if (action === 'tap') {
+      this.handleClick()
+    }
+  }
+
+  protected handleHold() {
+    const { env } = this.config
+    const scene = this.hass.states['donder_scenes.global'].attributes[this.config.scene]
+    
+    this.hass.callService('browser_mod', 'popup', {
+      content: {
+        type: 'custom:donder-custom-component',
+        component: 'scene-modal',
+        sensors: env.sensors,
+        devices: [
+          ...env.shutters,
+          ...env.switches
+        ],
+        locked: true,
+        sceneName: this.config.scene,
+        scene: scene
+      },
+      browser_id: localStorage.getItem('browser_mod-browser-id'),
+      card_mod: {
+        style:{
+          "ha-dialog$": `div.mdc-dialog div.mdc-dialog__scrim {
+            -webkit-backdrop-filter: blur(0.7em);
+            backdrop-filter: blur(0.7em);
+            transition: none !important;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+          } div.mdc-dialog div.mdc-dialog__surface {
+            border-radius: 5px;
+            width: 900px;
+          }
+          `,
+        }
+      }
+    })
   }
 
   private _showWarning(warning: string): TemplateResult {
@@ -102,37 +184,23 @@ export class BoilerplateCard extends LitElement {
 
   static get styles(): CSSResultGroup {
     return css`
-      /* REPLACE "donder-automation" with actual widget name */
       .type-custom-donder-automation {
         height: 100%;
         width: 100%;
       }
-      .donder-sizer {
-        max-width: 100%;
-        opacity: 0;
-      }
       .donder-widget {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        font-weight: 200;
-        line-height: 2em;
-        margin-right: 17px;
-        color: #fff;
-        background: url('/local/donder/assets/cctv_frame_fat.svg');
-        background-repeat: no-repeat;
+        background-color: var(--card-background-color);
+        color: var(--text-primary-color);
         padding: 15px 22px 22px;
         box-sizing: border-box;
         text-align: center;
-        font-size: 0.8em;
       }
-      /* .donder-widget:active {
-        opacity: 0.4;
-      } */
       .automation-icon{
-        max-height: 80%;
+        max-width: 200px;
+        margin: 0 auto;
+      }
+      .automation-icon ha-icon{
+        --mdc-icon-size: 40%;
       }
       @media (max-width: 600px) {
         .donder-widget {
@@ -171,10 +239,9 @@ export class BoilerplateCard extends LitElement {
         tabindex="0"
         .label=${`Boilerplate: ${this.config || 'No Entity Defined'}`}
       >
-        <img src='/local/donder/assets/sizer.jpg' class="donder-sizer"/>
         <div class='donder-widget'>
           <div class='automation-icon'>
-            <svg-item state=${this.config.icon}></svg-item>
+            <ha-icon icon="hass:weather-sunny"></ha-icon>
           </div>
           ${this.config.name}
         </div>
