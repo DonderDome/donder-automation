@@ -25,7 +25,7 @@ import { actionHandler } from './action-handler-directive';
 
 /* eslint no-console: 0 */
 console.info(
-  `%c  donder-automation \n%c  version: ${CARD_VERSION}  `,
+  `%c  Donder Automation \n%c  version: ${CARD_VERSION}  `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
@@ -33,7 +33,7 @@ console.info(
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
   type: 'donder-automation',
-  name: 'Boilerplate Card',
+  name: 'Donder Automation',
   description: 'A template custom card for you to create something awesome',
 });
 
@@ -196,11 +196,11 @@ export class BoilerplateCard extends LitElement {
         text-align: center;
       }
       .automation-icon{
-        max-width: 200px;
+        padding: 20px 0;
         margin: 0 auto;
       }
       .automation-icon ha-icon{
-        --mdc-icon-size: 40%;
+        --mdc-icon-size: 20%;
       }
       @media (max-width: 600px) {
         .donder-widget {
