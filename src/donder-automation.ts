@@ -75,12 +75,6 @@ export class BoilerplateCard extends LitElement {
     return hasConfigOrEntityChanged(this, changedProps, false);
   }
 
-  // private _handleAction(ev: ActionHandlerEvent): void {
-  //   if (this.hass && this.config && ev.detail.action) {
-  //     handleAction(this, this.hass, this.config, ev.detail.action);
-  //   }
-  // }
-
   protected handleClick() {
     const { settings, confirmation } = this.config
     if (confirmation) {
@@ -129,7 +123,7 @@ export class BoilerplateCard extends LitElement {
   }
 
   protected handleHold() {
-    const { env } = this.config
+    const env = this.hass.states['donder_env.global'].attributes
     const scene = this.hass.states['donder_scenes.global'].attributes[this.config.scene]
     
     this.hass.callService('browser_mod', 'popup', {
