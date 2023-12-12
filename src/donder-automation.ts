@@ -128,8 +128,7 @@ export class BoilerplateCard extends LitElement {
     
     this.hass.callService('browser_mod', 'popup', {
       content: {
-        type: 'custom:donder-custom-component',
-        component: 'scene-modal',
+        type: 'custom:donder-scene-modal',
         sensors: env.sensors,
         devices: [
           ...env.shutters,
