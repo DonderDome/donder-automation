@@ -197,10 +197,12 @@ const X=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,
         padding: 15px 22px 22px;
         box-sizing: border-box;
         text-align: center;
-        border-radius: var(--ha-card-border-radius)
+        border-radius: var(--ha-card-border-radius);
+        font-size: 10px;
+        text-transform: uppercase;
       }
       .automation-icon{
-        padding: 20px 0;
+        padding: 20px 0 5px 0;
         margin: 0 auto;
       }
       .automation-icon ha-icon{
