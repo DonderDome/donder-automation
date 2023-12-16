@@ -222,7 +222,7 @@ const X=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,
       >
         <div class='donder-widget'>
           <div class='automation-icon'>
-            <ha-icon icon="hass:weather-sunny"></ha-icon>
+            <ha-icon icon=${`hass:${this.config.icon}`}></ha-icon>
           </div>
           ${this.config.name}
         </div>

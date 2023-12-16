@@ -237,7 +237,7 @@ export class BoilerplateCard extends LitElement {
       >
         <div class='donder-widget'>
           <div class='automation-icon'>
-            <ha-icon icon="hass:weather-sunny"></ha-icon>
+            <ha-icon icon=${`hass:${this.config.icon}`}></ha-icon>
           </div>
           ${this.config.name}
         </div>
