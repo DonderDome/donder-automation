@@ -88,16 +88,6 @@ export class BoilerplateCard extends LitElement {
         left_button: "Close",
         left_button_action: this.hass.callService('browser_mod', 'close_popup', {browser_id: localStorage.getItem('browser_mod-browser-id')}),
         browser_id: localStorage.getItem('browser_mod-browser-id'),
-        card_mod: {
-          style:{
-            "ha-dialog$": `div.mdc-dialog div.mdc-dialog__surface {
-              width: 900px;
-            } div.mdc-dialog div.mdc-dialog__container {
-              height: auto !important;
-            }
-            `,
-          }
-        }
       })
     } else {
       this.hass.callService(settings.domain, settings.service, settings.service_data)
