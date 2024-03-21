@@ -115,8 +115,8 @@ export class BoilerplateCard extends LitElement {
         type: 'custom:donder-scene-modal',
         sensors: env.sensors,
         devices: [
-          ...env.shutters,
-          ...env.switches
+          ...env.shutters || [],
+          ...env.switches || [],
         ],
         locked: true,
         sceneName: this.config.scene,
