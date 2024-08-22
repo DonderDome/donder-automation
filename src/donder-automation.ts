@@ -50,6 +50,7 @@ export class BoilerplateCard extends LitElement {
 
   @property({ attribute: false }) public hass!: HomeAssistant;
   @state() private config!: BoilerplateCardConfig;
+  @state() protected holdTimeout;
 
   public setConfig(config: BoilerplateCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
@@ -109,7 +110,7 @@ export class BoilerplateCard extends LitElement {
   protected handleHold() {
     const env = this.hass.states['donder_env.global'].attributes
     const scene = this.hass.states['donder_scenes.global'].attributes[this.config.scene]
-    
+    console.log(scene)
     this.hass.callService('browser_mod', 'popup', {
       content: {
         type: 'custom:donder-scene-modal',
@@ -176,6 +177,41 @@ export class BoilerplateCard extends LitElement {
     `;
   }
 
+  protected handleMouseDown() {
+    this.startHoldTimer();
+  }
+
+  protected handleMouseUp() {
+    this.clearHoldTimer();
+  }
+
+  protected handleMouseLeave() {
+    this.clearHoldTimer();
+  }
+
+  protected handleTouchStart() {
+    this.startHoldTimer();
+  }
+
+  protected handleTouchEnd() {
+    this.clearHoldTimer();
+  }
+
+  protected handleTouchCancel() {
+    this.clearHoldTimer();
+  }
+
+  protected startHoldTimer() {
+    this.holdTimeout = setTimeout(() => {
+      this.handleHold();
+    }, 1000);
+  }
+
+  protected clearHoldTimer() {
+    clearTimeout(this.holdTimeout); // Clear the timeout if touch/mouse is released or canceled before 2 seconds
+  }
+
+
   protected render(): TemplateResult | void {
     /*
       ## INTERFACE
@@ -197,11 +233,13 @@ export class BoilerplateCard extends LitElement {
 
     return html`
       <ha-card
-        @action=${this._handleAction}
-        .actionHandler=${actionHandler({
-          hasHold: hasAction(this.config.hold_action),
-          hasDoubleClick: hasAction(this.config.double_tap_action),
-        })}
+       @mousedown=${() => this.handleMouseDown()}
+        @mouseup=${this.handleMouseUp}
+        @mouseleave=${this.handleMouseLeave}
+        @touchstart=${() => this.handleTouchStart()}
+        @touchend=${this.handleTouchEnd}
+        @touchcancel=${this.handleTouchCancel}
+        @click=${() => this.handleClick()}
         tabindex="0"
         .label=${`Boilerplate: ${this.config || 'No Entity Defined'}`}
       >
