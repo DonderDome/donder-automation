@@ -233,7 +233,7 @@ export class BoilerplateCard extends LitElement {
 
     return html`
       <ha-card
-       @mousedown=${() => this.handleMouseDown()}
+        @mousedown=${() => this.handleMouseDown()}
         @mouseup=${this.handleMouseUp}
         @mouseleave=${this.handleMouseLeave}
         @touchstart=${() => this.handleTouchStart()}

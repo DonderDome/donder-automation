@@ -215,7 +215,7 @@ const G=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e,
       }
     `}handleMouseDown(){this.startHoldTimer()}handleMouseUp(){this.clearHoldTimer()}handleMouseLeave(){this.clearHoldTimer()}handleTouchStart(){this.startHoldTimer()}handleTouchEnd(){this.clearHoldTimer()}handleTouchCancel(){this.clearHoldTimer()}startHoldTimer(){this.holdTimeout=setTimeout((()=>{this.handleHold()}),1e3)}clearHoldTimer(){clearTimeout(this.holdTimeout)}render(){return this.config.show_warning?this._showWarning("warning message"):this.config.show_error?this._showError("error message"):P`
       <ha-card
-       @mousedown=${()=>this.handleMouseDown()}
+        @mousedown=${()=>this.handleMouseDown()}
         @mouseup=${this.handleMouseUp}
         @mouseleave=${this.handleMouseLeave}
         @touchstart=${()=>this.handleTouchStart()}
